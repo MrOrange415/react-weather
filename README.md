@@ -1,3 +1,5 @@
+Simple weather app.  Purpose of this project is to practice form handling and connecting to an api to get info, and representation of that data for the user.  Minimal styling intended.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
