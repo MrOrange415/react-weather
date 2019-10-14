@@ -2,13 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 
 import DisplayWeather from './ui/DisplayWeather';
-
-
-const GET_WEATHER_API = 'http://api.openweathermap.org/data/2.5/weather';
-const LOCATION = 'london';
-const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
-const IMPERIAL= 'units=imperial';
-const WEATHER_URL = `${GET_WEATHER_API}?q=${LOCATION}&appid=${API_KEY}&${IMPERIAL}`;
+import WeatherForm from './components/WeatherForm';
 
 
 class App extends Component {
@@ -25,24 +19,15 @@ class App extends Component {
         sunset: 0,
         wind: 0,
       },
-      loading: true,
+      hasLocation: false,
     };
-    this.getWeatherData(WEATHER_URL);
   };
 
-  /**
-   * update state with weather location of location
-   * {string} url - url to fetch data from
-   */
-  getWeatherData = (url) => {
-    fetch(url, { method: 'GET' })
-    .then(response => response.json())
-    .then((weather) => {
-      let parsedWeather = this.parseWeatherData(weather);
-      this.setState({weather: parsedWeather});
-      this.setState({loading: false});
-    });
-  };
+
+  setWeatherData = (weatherInfo) => {
+    this.setState({weather: weatherInfo});
+    this.setState({hasLocation: true});
+  }
 
   /**
    * convert weather object to human readable metrics
@@ -66,14 +51,25 @@ class App extends Component {
       icon: `http://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`
     };
 
-    return weatherObj;
+    this.setWeatherData(weatherObj);
+  }
+
+  /**
+   * clear weather data
+   */
+  resetLocation = () => {
+    this.setState({weather: {}});
+    this.setState({hasLocation: false});
   }
 
   render() {
     return (
       <div className="App">
-        {!this.state.loading && (
-          <DisplayWeather weather={this.state.weather}/>
+        {!this.state.hasLocation && (
+          <WeatherForm callback={this.parseWeatherData}/>
+        )}
+        {this.state.hasLocation && (
+          <DisplayWeather weather={this.state.weather} resetLocation={this.resetLocation}/>
         )}
       </div>
     );
