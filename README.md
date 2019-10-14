@@ -1,4 +1,8 @@
-Simple weather app.  Purpose of this project is to practice form handling and connecting to an api to get info, and representation of that data for the user.  Minimal styling intended.
+Simple weather app.  Purpose of this project is:
+
+1. Practice form handling
+2. Connecting to an api to get info
+3. Representation of that data for the user.  Minimal styling intended.
 
 ----------------------------------------------------------------------
 
